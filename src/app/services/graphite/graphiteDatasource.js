@@ -28,6 +28,7 @@ function (angular, _, $, config, kbn, moment) {
           until: this.translateTime(options.range.to),
           targets: options.targets,
           format: options.format,
+          cacheTimeout: options.cacheTimeout,
           maxDataPoints: options.maxDataPoints,
         };
 
@@ -147,7 +148,9 @@ function (angular, _, $, config, kbn, moment) {
         options['format'] = 'json';
       }
 
-      options['cacheTimeout'] = 1;
+      if (options.cacheTimeout !== null) {
+        options['cacheTimeout'] = options.cacheTimeout;
+      }
 
       _.each(options, function (value, key) {
         if ($.inArray(key, graphite_options) === -1) {
